@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=yes" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="bootstrap/js/jquery-3.2.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+	
+	<style>
+body {margin:0;}
+
+ul.footer {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+li.lifooter {
+    float: left;
+}
+
+li.lifooter a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li.lifooter a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+ */   background-color: #4CAF50;*/
+}
+</style>
+	
+    <title>Fauna JBRJ</title>
+</head>
+
+<body>
+<ul class="footer">
+  <li class="lifooter"><a class="active" href="index.html"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+  <li class="lifooter"><a data-toggle="pill" href="#novochamado"><span class="glyphicon glyphicon-file"></span></a></li>
+  <li class="lifooter"><a data-toggle="pill" href="#atendimento"><span class="glyphicon glyphicon-search"></span></a></li>
+  <li class="lifooter"><a data-toggle="modal" data-target="#myModalSobre"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+</ul>
+
+<!-- Modal content-->
+ <div class="modal fade" id="myModalSobre" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Fauna JBRJ</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+			<label for="email">Sistema desenvolvido pela CTIC</label>
+		  </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+	 </div>
+	</div>
+
+
+ <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Atendimento</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+			<label for="email">Descrição:</label>
+			<textarea class="form-control" rows="3" id="edtdescricao"></textarea>
+		  </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-success" data-dismiss="modal">Salvar</button>
+          <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+	 </div>
+	</div>
+
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span> 
+		  </button>
+		  <a class="navbar-brand" href="index.html">Fauna </a><span id="div_dadoslogin" ></span>
+		  
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">	
+			<ul class="nav navbar-nav">
+			  <li class="active"><a href="index.html">Home</a></li>
+			  <li><a data-toggle="pill" href="#novochamado">Abrir chamado</a></li>
+			  <li><a data-toggle="pill" href="#atendimento">Atendimento</a></li>
+			  <li><a data-toggle="pill" href="#manejo">Manejo</a></li>
+			  <li class='hidden'><a data-toggle="pill" href="#conschamado">Cons. Chamado</a></li>
+			  <li><a data-toggle="pill" href="#login"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+			  <li><a onclick='exitFromApp()'><span class="glyphicon glyphicon-log-in"></span> Sair</a></li>
+			</ul>
+			
+		</div>
+	  </div>
+	</nav>
+	
+	<input type='hidden' name='idusuario' id='idusuario' value=''>
+	<input type='hidden' name='nome' id='nome' value=''>
+	<div class="tab-content" id="mytab">
+	
+	
+		<div id="conschamado" class="tab-pane fade in active">
+			<div class="container">
+				<h3>Consulta Chamado</h3>
+				<div class="form-group">
+					<label for="email">ID:</label>
+					<input type="text" class="form-control input-sm" id="edtID">
+				</div>
+				<div class="form-group">
+					<label for="email">Local:</label>
+					<textarea class="form-control" rows="3" id="edtdescricao2"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="email">Descrição:</label>
+					<textarea class="form-control" rows="3" id="edtdescricao2"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="email">Data:</label>
+					<input type="text" class="form-control input-sm" id="edtdata">
+				</div>
+				<div class="form-group">
+					<label for="email">Hora:</label>
+					<input type="text" class="form-control input-sm" id="edthora">
+				</div>
+				<div class="form-group">
+					<label for="email">Usuário:</label>
+					<input type="text" class="form-control input-sm" id="edtusuario">
+				</div>
+				<button type="button" class="btn btn-info btn-sm btn-block" onclick="addFotoChamado(document.getElementById('edtID').value)">Adicionar foto</button><br>
+			</div>
+		</div>
+
+		
+
+	</div>
+	
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+
+		$("ul").on("click", function(){
+			$('.navbar-collapse').collapse('hide');
+		});
+
+		
+function getImage() {
+ navigator.camera.getPicture(uploadPhoto, function(message) {
+ alert('get picture failed');
+ }, {
+ quality: 100,
+ destinationType: navigator.camera.DestinationType.FILE_URI,
+ sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+ });
+}
+
+function uploadPhoto(imageURI) {
+ var options = new FileUploadOptions();
+ options.fileKey = "file";
+ options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+ options.mimeType = "image/jpeg";
+ console.log(options.fileName);
+ var params = new Object();
+ params.value1 = "test";
+ params.value2 = "param";
+ options.params = params;
+ options.chunkedMode = false;
+
+var ft = new FileTransfer();
+ ft.upload(imageURI, "http://jabot.jbrj.gov.br/fauna/upload.php", function(result){
+ console.log(JSON.stringify(result));
+ }, function(error){
+ console.log(JSON.stringify(error));
+ }, options);
+ }		
+		
+		
+		
+		function exitFromApp(){
+		   navigator.app.exitApp();
+		}
+		
+		 function resolveOnSuccess(entry) {
+            fileuri = entry.toURL();
+            //use fileuri to upload image on server
+			server = "http://jabot.jbrj.gov.br/fauna/upload.php";
+            if (server) {               // Specify transfer options
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                options.fileName = fileuri.substr(fileuri.lastIndexOf('/') + 1);
+                options.mimeType = "image/jpeg";
+                options.chunkedMode = false; // Transfer picture to server
+                var ft = new FileTransfer();
+                ft.upload(imageURI, server, function(r) {
+                    document.getElementById('camera_status').innerHTML = "Upload successful: " + options.fileName+ ' | '+r.bytesSent + " bytes uploaded.";
+                }, function(error) {
+                    document.getElementById('camera_status').innerHTML = "Upload failed: Code = " + error.code;
+                }, options);
+            }
+        }
+		
+		function uploadPicture() {      // Get URI of picture to upload
+            var img = document.getElementById('foto1');
+            var imageURI = img.src;
+            if (!imageURI) {
+                return;
+            }        // Verify server has been entered
+			window.resolveLocalFileSystemURI(imageURI, resolveOnSuccess, fsFail);
+        }	
+   
+		function fsFail(message) {
+            alert("Error Message: " + message + "Error Code:" + message.target.error.code);
+        }
+	
+		
+		function addFotoChamado(id)
+		{
+			alert(id);
+			navigator.camera.getPicture(onSuccess, onFail, { quality: 25,
+				destinationType: Camera.DestinationType.FILE_URI
+			});
+
+			function onSuccess(imageURI) {
+				if (tipo==1)
+				{
+					var image = document.getElementById('foto1');
+					//image.src = "data:image/jpeg;base64," + imageURI;
+					image.src = imageURI;
+				}
+				else
+				{
+					var image = document.getElementById('foto2');
+					//image.src = "data:image/jpeg;base64," + imageURI;
+					image.src = imageURI;
+				}
+			}
+
+			function onFail(message) {
+				alert('Failed because: ' + message);
+			}
+		}
+		
+		
+		function salvarChamado()
+		{
+			/*//alert(document.getElementById('edtsolicitante').value);
+			if (document.getElementById('edtsolicitante').value=='')
+			{
+				navigator.notification.alert(
+				'Efetue o Login',  // message
+				alertDismissed,         // callback
+				'Atenção',            // title
+				'OK'                  // buttonName
+				);
+				
+			}
+			else
+			{
+				var solicitante = document.getElementById('edtsolicitante').value;
+				var local = document.getElementById('edtlocal').value;
+				var animal = document.getElementById('edtanimal').value;
+				var descricao = document.getElementById('edtdescricao').value;
+		//alert(ime);
+	     //document.getElementById('edtlabel').innerHTML="Usuario: "+usuario+" Lat/Long: "+latitude + ','+ longitude + ' Equipe: '+equipe;
+				var params = "op=I&solicitante="+solicitante+"&local="+local+"&animal="+animal+"&descricao="+descricao;
+                var resultado = 0;
+                var xmlhttp = new XMLHttpRequest();
+                //alert(latitude);
+				
+                xmlhttp.open("GET","http://jabot.jbrj.gov.br/fauna/exec.chamado.php?"+params,true);
+				//xmlhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*');
+
+                xmlhttp.onload = function (){
+					//alert(xmlhttp.status);
+                    if (xmlhttp.status==200)
+                        {
+                            //document.getElementById('div_dadosirmao').innerHTML=xmlhttp.responseText;
+                            //alert(params);
+                            alert(xmlhttp.responseText);
+							//resultado = xmlhttp.responseText;
+                        }
+                    else if (xmlhttp.status == 404) {
+                        alert("Web Service doesn't work");
+                        
+                    }
+                    else
+                        {
+                            alert("Unknown erro occurred while trying insert data");
+                        }
+                };
+                xmlhttp.send();
+                //return resultado;
+				
+        }
+*/		
+//alert('');
+//			$('#conschamado').tab('show');
+			
+			//$('#mytab a[href="#conschamado"]').tab('show') 
+			//$('#conschamado').tab('toogle')
+			//document.getElementById('novochamado').style.display = 'block';
+			//document.getElementById('conschamado').style.display = 'none';
+			window.location = 'conschamado.html';
+			
+     }
+		
+		
+		function login()
+		{
+		var login = document.getElementById('edtlogin').value;
+		var senha = document.getElementById('edtsenha').value;
+		//alert(ime);
+	     //document.getElementById('edtlabel').innerHTML="Usuario: "+usuario+" Lat/Long: "+latitude + ','+ longitude + ' Equipe: '+equipe;
+         var params = "edtlogin="+login+"&edtsenha="+senha;
+                var resultado = 0;
+                var xmlhttp = new XMLHttpRequest();
+                //alert(latitude);
+				
+                xmlhttp.open("GET","http://secretaria.ritoescoces.org.br/testalogin2.php?"+params,true);
+				//xmlhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*');
+
+                xmlhttp.onload = function (){
+					//alert(xmlhttp.status);
+                    if (xmlhttp.status==200)
+                        {
+						    var str = xmlhttp.responseText;
+							if (str.substring(0, 4)=='ERRO')
+							{
+								document.getElementById('div_dadoslogin').innerHTML='<p class="navbar-text">LOGIN INVÁLIDO</p>';
+							}
+							else
+							{
+								var res = str.split("|");
+								var res2 = '<p class="navbar-text">'+res[1]+'</p>';
+								document.getElementById('div_dadoslogin').innerHTML=res2;
+								document.getElementById('idusuario').value=res[0];
+								document.getElementById('nome').value=res[1];
+								var username = res[1];
+								window.localStorage.setItem("uname", username);
+								navigator.notification.alert(
+    'Usuário: '+res[1],  // message
+    alertDismissed,         // callback
+    'Login',            // title
+    'OK'                  // buttonName
+);
+								$("#login").removeClass("in active");
+								$("#busca").addClass("in active");
+                            }
+							//alert(params);
+                            //alert(xmlhttp.responseText);
+                        }
+                    else if (xmlhttp.status == 404) {
+                        alert("Web Service doesn't work");
+                        
+                    }
+                    else
+                        {
+                            alert("Unknown erro occurred while trying insert data");
+                        }
+                };
+                xmlhttp.send();
+                return resultado;       
+         
+     }
+	 
+
+    </script>
+</body>
+
+</html>
