@@ -99,7 +99,7 @@ body {
 .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 18px;
     color: #818181;
     display: block;
     transition: 0.3s;
@@ -160,10 +160,13 @@ body {
 
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="#">About</a>
-  <a href="#">Services</a>
-  <a href="#">Clients</a>
-  <a href="#">Contact</a>
+  <a href="#">Classificados</a>
+  <a href="#">Ocorrencias</a>
+  <a href="#">Horários</a>
+  <a href="#">Downloads</a>
+  <a href="#login">Login</a>
+  <a href="#trocarsenha">Trocar Senha</a>
+  <a onclick='exitFromApp()'>Sair</a>
 </div>
 
 <ul class="footer">
@@ -611,6 +614,8 @@ function myMap(idchamado,latitude,longitude,div) {
 			$('.navbar-collapse').collapse('hide');
 			
 		});
+		
+		
 		
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "250px";
