@@ -87,7 +87,7 @@ body {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 999;
     top: 0;
     left: 0;
     background-color: #111;
@@ -97,9 +97,9 @@ body {
 }
 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 6px 6px 6px 24px;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
     color: #818181;
     display: block;
     transition: 0.3s;
@@ -113,7 +113,7 @@ body {
     position: absolute;
     top: 0;
     right: 25px;
-    font-size: 36px;
+    font-size: 25px;
     margin-left: 50px;
 }
 
@@ -158,14 +158,15 @@ body {
 
 <body>
 
-<div id="mySidenav" class="sidenav">
+<div id="mySidenav" class="sidenav ">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <a href="#">Classificados</a>
   <a href="#">Ocorrencias</a>
-  <a href="#">Horários</a>
+  <a onclick='closeNav()' data-toggle="pill" href="#horario">Horários</a>
   <a href="#">Downloads</a>
-  <a href="#login">Login</a>
-  <a href="#trocarsenha">Trocar Senha</a>
+  <a onclick='closeNav()' data-toggle="pill" href="#login">Login</a>
+  <a onclick='closeNav()' data-toggle="pill" href="#trocarsenha">Trocar Senha</a>
+  <a onclick='closeNav();abreSobre()'>Sobre</a>
   <a onclick='exitFromApp()'>Sair</a>
 </div>
 
@@ -174,7 +175,7 @@ body {
 </ul>
 
 <!-- Modal content-->
- <div class="modal fade" id="myModalSobre" role="dialog">
+ <div class="modal fade" id="ModalSobre" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -284,6 +285,48 @@ body {
 	<input type='hidden' name='idusuario' id='idusuario' value=''>
 	<input type='hidden' name='nome' id='nome' value=''>
 	<div class="tab-content" id="mytab">
+	
+		<div id="horario" class="tab-pane fade">
+			<div class="container">
+				<h3>Horários</h3>
+				<table class="table table-striped">
+					<thead>
+					  <tr>
+						<th></th>
+						<th>Abre</th>
+						<th>Fecha</th>
+					  </tr>
+					</thead>
+					<tbody>
+					  <tr>
+						<td>Administração</td>
+						<td>9h</td>
+						<td>17h</td>
+					  </tr>
+					  <tr>
+						<td>Piscina 3ª a Domingo</td>
+						<td>9h</td>
+						<td>17h</td>
+					  </tr>
+					  <tr>
+						<td>Parquinho</td>
+						<td>9h</td>
+						<td>17h</td>
+					  </tr>
+					  <tr>
+						<td>Academia</td>
+						<td>9h</td>
+						<td>17h</td>
+					  </tr>
+					  <tr>
+						<td>Quadra</td>
+						<td>9h</td>
+						<td>17h</td>
+					  </tr>
+					</tbody>
+				  </table>			
+			</div>
+		</div>
 	
 		<div id="consatendimento" class="tab-pane fade">
 			<div class="container" id='chamados'>
@@ -427,8 +470,6 @@ body {
 			<div class="container">
 				<div class="app">
 					<!--<h1>Fauna JBRJ</h1>-->
-			
-				
 				<div class="form-group">
 					<label for="email">Usuário:</label>
 					<input type="text" class="form-control" id="edtlogin">
@@ -615,7 +656,10 @@ function myMap(idchamado,latitude,longitude,div) {
 			
 		});
 		
-		
+		function abreSobre()
+		{
+		   $("#ModalSobre").modal();
+		}
 		
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "250px";
